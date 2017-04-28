@@ -11,9 +11,9 @@ int mode = 1;
 int const array_size = 10;
 
 void doSendMenu() {
-    // Um den Schwierigkeitsgrad einstellen zu können.
+    // Um den Schwierigkeitsgrad einstellen zu kÃ¶nnen.
 
-	cout << "Bitte wähle einen Schwierigkeitsgrad.\n";
+	cout << "Bitte wÃ¤hle einen Schwierigkeitsgrad.\n";
 	cout << "[1] leicht\n" << "[2] mittel\n" << "[3] schwer\n" << endl;
 	cin >> mode;
 
@@ -32,7 +32,7 @@ void doSendMenu() {
 int* getPlayerChoice() {
     /*
     Diese Methode soll die Eingabe vom Spieler lesen.
-    Bei einer ungültigen Eingabe gibt es aber noch einen bug.
+    Bei einer ungÃ¼ltigen Eingabe gibt es aber noch einen bug.
     */
 	int* choice = new int[2];
 	choice[0] = 0;
@@ -90,7 +90,7 @@ int* getPlayerChoice() {
 }
 
 int main() {
-	srand(time(0)); //Für Zufallsgenerator
+	srand(time(0)); //FÃ¼r Zufallsgenerator
 	cout << " --- Schiffe versenken (KonsolenEdition) --- \n" << endl;  //"Titel"
 
 	doSendMenu();   //Gibt den Schwierigkeitsgrad wieder
@@ -107,7 +107,7 @@ int main() {
 
 	while (playerView.counter >= 1) {
 		//game loop
-		cout << "\nDu hast noch " << playerView.counter << " Schüsse übrig.\n"<< "Du kannst noch " <<m.counter << " Schiffsteile treffen. \n" << flush;
+		cout << "\nDu hast noch " << playerView.counter << " SchÃ¼sse Ã¼brig.\n"<< "Du kannst noch " <<m.counter << " Schiffsteile treffen. \n" << flush;
 		playerView.print();
 		player_choice = getPlayerChoice();
 		if(player_choice[0] == -1 && player_choice[1] == -1) {
@@ -136,12 +136,13 @@ int main() {
 			break;
 
 	}
+	//Schleife wird beendet, wenn der Spieler keine SchÃ¼sse mehr hat
 	if (m.counter == 0)
-		cout << "Du hast gewonnen!!!!!!!!!!!!!!!!!!!!!!!!!!!" << endl;
+		cout << "Du hast gewonnen!" << endl;
 	else
 		cout << "Du hast verloren :-(" << endl;
 
-	//winner?
+	
 
 	system("pause");
 	return 0;
