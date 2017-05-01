@@ -1,7 +1,7 @@
-
 #include <iostream>
 #include <string>
-#include "map.cpp"
+#include "map.h"
+#include <cstdlib>
 
 
 
@@ -11,7 +11,8 @@ int mode = 1;
 int const array_size = 10;
 
 void doSendMenu() {
-    // Um den Schwierigkeitsgrad einstellen zu können.
+    // Diese Methode fragt den Spieler einfach nur ab, welchen Schwierigkeitsgrad er haben möchte.
+    // Bei zukünftiger Implementierung lohnt es sich möglicherweise eine Klasse für das Menü zu erzeugen.
 
 	cout << "Bitte wähle einen Schwierigkeitsgrad.\n";
 	cout << "[1] leicht\n" << "[2] mittel\n" << "[3] schwer\n" << endl;
@@ -54,10 +55,8 @@ int* getPlayerChoice() {
 	}
 
 	/* Der rekursive Aufruf verursacht noch einen bug.
-
 	*/
 
-	int length = (int)plc.length();
 	if (plc.at(0) == 'A' || plc.at(0) == 'B' || plc.at(0) == 'C' || plc.at(0) == 'D' || plc.at(0) == 'E' || plc.at(0) == 'F' || plc.at(0) == 'G' || plc.at(0) == 'H' || plc.at(0) == 'I' || plc.at(0) == 'J')
 		choice[0] = plc[0] - '0' - 16;
 	else {
@@ -90,12 +89,17 @@ int* getPlayerChoice() {
 }
 
 int main() {
-	srand(time(0)); //Für Zufallsgenerator
 	cout << " --- Schiffe versenken (KonsolenEdition) --- \n" << endl;  //"Titel"
 
 	doSendMenu();   //Gibt den Schwierigkeitsgrad wieder
 	int* player_choice = 0;
 
+	/*
+	Hier werden im Grund zwei maps erstellt:
+        - m: Diese 2D Tabelle enthält alle zufallsgenerierten Schiffe.
+        - playerView: Diese Tabelle sammelt die Schüsse vom Spieler und enthält keine Schiffspositionen.
+    Nach jedem Schuss wird playerView mit m verglichen, um zu sehen, ob es einen Treffer gab.
+	*/
 	map m;
 	m.size = array_size;
 	m.generate(mode);
@@ -106,21 +110,28 @@ int main() {
 
 
 	while (playerView.counter >= 1) {
-		//game loop
+		/*
+            game loop
+            Diese While-Schleife wird solange ausgeführt, bis playerView.counter (repräsentiert die Anzahl der Schüsse vom Spieler, < 1 ist.
+		*/
 		cout << "\nDu hast noch " << playerView.counter << " Schüsse übrig.\n"<< "Du kannst noch " <<m.counter << " Schiffsteile treffen. \n" << flush;
 		playerView.print();
 		player_choice = getPlayerChoice();
+
+		//Diese kleine Abfrage dient nur Testzwecken. Mit der Eingabe "map.print" ist es möglich, eine aufgedeckte Karte auszugeben.
 		if(player_choice[0] == -1 && player_choice[1] == -1) {
             cout << "Printing map..." << endl;
             m.print();
             continue;
 		}
+
+		//Hier wird geprüft, ob der Spieler das eingegebene Feld bereits attakiert hat.
 		if (playerView.mid[player_choice[1] - 1][player_choice[0] - 1] == 1) {
 			cout << "Du hast dieses Feld bereits attakiert." << endl;
 			continue;
 		}
 		else {
-
+            //Falls der Spieler dieses Feld noch nicht getroffen hat, wird m mit playerView verglichen und möglicherweise ein Treffer ausgegeben.
 			if (m.mid[player_choice[1] - 1][player_choice[0] - 1] != 0) {
 				playerView.mid[player_choice[1] - 1][player_choice[0] - 1] = m.mid[player_choice[1] - 1][player_choice[0] - 1];
 				cout << "Du hast was getroffen!" << endl;
@@ -132,17 +143,19 @@ int main() {
 
 		player_choice = 0;
 		playerView.counter--;
+
+		//m.counter entspricht der Anzahl an Schiffsteilen. Falls sie auf 0 sinkt, ist das Spiel gewonnen und der Loop wird unterbrochen.
 		if (m.counter == 0)
 			break;
 
 	}
-	//Schleife wird beendet, wenn der Spieler keine Schüsse mehr hat
+	//Schleife wird beendet, wenn der Spieler keine Schüsse mehr hat oder keine Schiffsteile mehr übrig sind.
 	if (m.counter == 0)
 		cout << "Du hast gewonnen!" << endl;
 	else
 		cout << "Du hast verloren :-(" << endl;
 
-	
+
 
 	system("pause");
 	return 0;
