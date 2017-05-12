@@ -38,8 +38,7 @@ void game::run()
 	map ShipMap;
 	switch (mode) {
 	case 1:
-		//ShipMap.generateShips(2, 3, 4, 3);
-		ShipMap.generateShips(1, 3, 4, 3);
+		ShipMap.generateShips(2, 3, 4, 3);
 		break;
 	case 2:
 		ShipMap.generateShips(1, 2, 3, 4);
