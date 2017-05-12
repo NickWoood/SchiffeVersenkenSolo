@@ -5,6 +5,10 @@
 
 void map::attackField(int x, int y)
 {
+	/*
+	*Alle Schiffe sollen in einer Tabelle gespeichert werden.
+	*Dadurch wird es in dieser Methode nur noch eine Schleife geben.
+	*/
 	bool hit = false;
 	for (int i = 1; i <= s_schiffe_count; i++) {
 		if (s_schiffe[i - 1].isOnPos(x, y)) {
@@ -180,6 +184,10 @@ int map::getShipCount()
 
 void map::refresh()
 {
+	/*
+	*Diese Methode wird noch verkleinert (weniger Schleifen).
+	*Momentan ist hier noch irgendwo ein bug, der zu fehlerhaften Map-Daten führt.
+	*/
 	for(int xpos = 1; xpos <= 10; xpos++) {
 		for (int ypos = 1; ypos <= 10; ypos++) {
 			for (int i = 1; i <= s_schiffe_count; i++) {
