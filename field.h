@@ -11,7 +11,7 @@ public:
 
 	int** array;
 private:
-	int length;
+	int length = 0;
 };
 
 #endif
