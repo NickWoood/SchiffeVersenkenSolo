@@ -5,14 +5,13 @@ using namespace std;
 
 field::field(int size)
 {
-	cout << "erstelle Feld der größe " << size << "\n\n" << endl;
-	array = new int*[size];
+	arrayCollect = new int*[size];
 	for (int h = 0; h < size; h++) {
-		array[h] = new int[size];
+		arrayCollect[h] = new int[size];
 		length++;
 		for (int w = 0; w < size; w++)
 		{
-			array[h][w] = 0;
+			arrayCollect[h][w] = 0;
 		}
 	}
 }
@@ -30,7 +29,7 @@ void field::print()
 		cout << h + 1 << "\t| ";
 		for (int w = 0; w < length; w++)
 		{
-			cout << array[h][w] << " ";
+			cout << arrayCollect[h][w] << " ";
 			if (w == length - 1)
 				cout << "|";
 		}
@@ -46,7 +45,7 @@ int field::getEntry(int x, int y)
 		for (int w = 0; w < length; w++)
 		{
 			if (x - 1 == w && y - 1 == h)
-				return array[h][w];
+				return arrayCollect[h][w];
 		}
 	}
 	return -1;
@@ -57,7 +56,7 @@ bool field::isInserted(int thing)
 	for (int h = 0; h <length; h++) {
 		for (int w = 0; w < length; w++)
 		{
-			if (array[h][w] == thing)
+			if (arrayCollect[h][w] == thing)
 				return true;
 		}
 	}
@@ -69,8 +68,22 @@ void field::insert(int value, int x, int y)
 	for (int h = 0; h <length; h++) {
 		for (int w = 0; w < length; w++)
 		{
-			if (x - 1 == w && y - 1 == h)
-				array[h][w] = value;
+			if (x - 1 == w && y - 1 == h) {
+				arrayCollect[h][w] = value;
+             //   if(value == 5)
+             //       print();
+			}
 		}
 	}
+}
+
+void field::clean()
+{
+	for (int h = 0; h <length; h++) {
+		for (int w = 0; w < length; w++)
+		{
+			arrayCollect[h][w] = 0;
+		}
+	}
+
 }
