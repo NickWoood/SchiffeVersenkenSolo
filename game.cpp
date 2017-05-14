@@ -7,7 +7,7 @@
 using namespace std;
 void game::menu()
 {
-	cout << "Bitte wähle einen Schwierigkeitsgrad.\n";
+	cout << "Bitte waehle einen Schwierigkeitsgrad.\n";
 	cout << "[1] leicht\n" << "[2] mittel\n" << "[3] schwer\n" << endl;
 	cin >> mode;
 
@@ -38,7 +38,8 @@ void game::run()
 	map ShipMap;
 	switch (mode) {
 	case 1:
-		ShipMap.generateShips(2, 3, 4, 3);
+		//ShipMap.generateShips(2, 3, 4, 3);
+		ShipMap.generateShips(1, 3, 4, 3);
 		break;
 	case 2:
 		ShipMap.generateShips(1, 2, 3, 4);
@@ -50,9 +51,12 @@ void game::run()
 
 	while (PlayerMap.shots >= 1 && running) {
 		//Game Loop
-		cout << "\nDu hast noch " << PlayerMap.shots << " Schüsse übrig.\n" << "Du kannst noch " << ShipMap.getShipCount() << " Schiffe treffen. \n" << flush;
+		cout << "\nDu hast noch " << PlayerMap.shots << " Schuesse übrig.\n" << "Du kannst noch " << ShipMap.ship_count << " Schiffe treffen. \n" << flush;
 		PlayerMap.print();
 		ShipMap.print();
+
+
+        ShipMap.refresh();
 		int* choice = getPlayerChoice();
 		if (!PlayerMap.isEmptyField(choice[0], choice[1])) {
 			//Falls der Spieler das Feld schon getroffen hat.
@@ -65,7 +69,10 @@ void game::run()
 			//Überprüfe ob ein Schiffe der attakierten Position entspricht.
 			ShipMap.attackField(choice[0], choice[1]);
 		}
- 
+		if (ShipMap.ship_count == 0) {
+			cout << "Du hast alle Schiffe getoffen !" << endl;
+			stop();
+		}
 
 		PlayerMap.shots--;
 	}
@@ -81,6 +88,7 @@ int * game::getPlayerChoice()
 	/*
 	Diese Methode soll die Eingabe vom Spieler lesen.
 	Bei einer ungültigen Eingabe gibt es aber noch einen bug.
+	Da diese Methode aber bei der Benutzung von Sprites sowieso rausfliegt, bleibt sie erstmal so.
 	*/
 	int* choice = new int[2];
 	choice[0] = 0;
