@@ -1,5 +1,5 @@
-#ifndef field_h
-#define field_h
+#ifndef FIELD_H_INCLUDED
+#define FIELD_H_INCLUDED
 
 class field {
 public:
@@ -8,9 +8,9 @@ public:
 	int getEntry(int x, int y);
 	bool isInserted(int thing);
 	void insert(int value, int x, int y);
+	void clean();
 
-	int** array;
-private:
+	int** arrayCollect;
 	int length = 0;
 };
 
