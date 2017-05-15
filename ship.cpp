@@ -48,6 +48,5 @@ void ship::addPos(int x, int y)
 			pos[h][1] = y;
 			break;
 		}
-		cout << "Adding " << x << " and " << y << " ! " << endl;
 	}
 }
