@@ -22,12 +22,13 @@ bool ship::isOnPos(int x, int y)
 	return false;
 }
 
-void ship::destroy(int x, int y)
+void ship::attack(int x, int y)
 {
 	for (int h = 0; h < length; h++) {
 		if (pos[h][0] == x && pos[h][1] == y) {
 			pos[h][0] = -1;
 			pos[h][1] = -1;
+			std::cout << "Du hast was getorffen !" << std::endl;
 		}
 	}
 }
